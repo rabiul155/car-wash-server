@@ -3,6 +3,8 @@ import cors from 'cors';
 
 //route import
 import notFoundRoute from './app/middleware/notFoundRoute';
+import globalErrorHandler from './app/error/globalErrorHandler';
+import { servicesRouter } from './app/modules/service/service.routes';
 
 const app: Application = express();
 
@@ -15,7 +17,14 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello from server');
 });
 
+// Route
+
+app.use('/api/v1/services', servicesRouter);
+
 //Not found route handle
 app.all('*', notFoundRoute);
+
+//Global error handling
+app.use(globalErrorHandler);
 
 export default app;
