@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Query } from 'mongoose';
 import { ServiceType } from './service.interface';
 const serviceSchema = new mongoose.Schema<ServiceType>(
   {
@@ -24,13 +24,19 @@ const serviceSchema = new mongoose.Schema<ServiceType>(
     isDeleted: {
       type: Boolean,
       default: false,
-      select: false,
     },
   },
   {
     timestamps: true,
   },
 );
+
+serviceSchema.pre(/^find/, async function (next) {
+  if (this instanceof Query) {
+    this.find({ isDeleted: { $ne: true } });
+  }
+  next();
+});
 
 export const ServiceModel = mongoose.model<ServiceType>(
   'Service',
