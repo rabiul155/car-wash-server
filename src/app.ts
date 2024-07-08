@@ -19,7 +19,7 @@ app.get('/', (req: Request, res: Response) => {
 
 // Route
 
-app.use('/api/v1/services', servicesRouter);
+app.use('/api/services', servicesRouter);
 
 //Not found route handle
 app.all('*', notFoundRoute);

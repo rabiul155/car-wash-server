@@ -27,15 +27,13 @@ const sendErrorProd = (err: ErrorType, res: Response) => {
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
-  err.message = err.message || 'Internal server error';
-
+  // err.message = err.message || 'Internal server error';
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
     error.message = err.message;
     error.statusCode = err.statusCode;
-
     sendErrorProd(error, res);
   }
 };
