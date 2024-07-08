@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import AppError from '../../error/AppError';
 import { ServiceType } from './service.interface';
 import { ServiceModel } from './service.model';
@@ -12,7 +13,7 @@ const getAllServicesDB = async () => {
   return results;
 };
 
-const getServicesDB = async (id: string) => {
+const getServicesDB = async (id: string | mongoose.Types.ObjectId) => {
   const result = await ServiceModel.findById(id);
   if (!result) {
     throw new AppError(404, 'Service not found');

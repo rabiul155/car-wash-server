@@ -5,6 +5,7 @@ import cors from 'cors';
 import notFoundRoute from './app/middleware/notFoundRoute';
 import globalErrorHandler from './app/error/globalErrorHandler';
 import { servicesRouter } from './app/modules/service/service.routes';
+import { slotsRouter } from './app/modules/slot/slot.routes';
 
 const app: Application = express();
 
@@ -20,6 +21,7 @@ app.get('/', (req: Request, res: Response) => {
 // Route
 
 app.use('/api/services', servicesRouter);
+app.use('/api/slots', slotsRouter);
 
 //Not found route handle
 app.all('*', notFoundRoute);
