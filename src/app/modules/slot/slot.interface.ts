@@ -7,3 +7,9 @@ export type SlotType = {
   endTime: string;
   isBooked?: 'available' | 'booked' | 'canceled';
 };
+
+export interface QueryType {
+  date?: string;
+  service?: string;
+  serviceId?: string;
+}

@@ -5,9 +5,12 @@ import { slotController } from './slot.controllers';
 
 const router = express.Router();
 
-router
-  .route('/')
+router.post(
+  '/',
+  validateRequest(slotValidationSchema),
+  slotController.createSlot,
+);
 
-  .post(validateRequest(slotValidationSchema), slotController.createSlot);
+router.get('/availability', slotController.getAvailableSlot);
 
 export const slotsRouter = router;
