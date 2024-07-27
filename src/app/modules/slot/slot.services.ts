@@ -1,41 +1,12 @@
 import AppError from '../../error/AppError';
 import { ServiceType } from '../service/service.interface';
 import { carServices } from '../service/service.services';
-import { SlotType } from './slot.interface';
+import { QueryType, SlotType } from './slot.interface';
 import SlotModel from './slot.model';
-
-function timeStringToMinutes(timeString: string) {
-  const [hours, minutes] = timeString.split(':').map(Number);
-  return hours * 60 + minutes;
-}
-
-function timeNumberToString(timeNum: number) {
-  const hour = String(timeNum / 60).padStart(2, '0');
-  const min = String(timeNum % 60).padStart(2, '0');
-  const time = `${hour}:${min}`;
-  return time;
-}
-
-const createTimeSlot = (data: SlotType, duration: number) => {
-  const slots: SlotType[] = [];
-  const startTime = timeStringToMinutes(data.startTime);
-  const endTime = timeStringToMinutes(data.startTime);
-  const slot = (endTime - startTime) / duration;
-
-  for (let i = 0; i < slot; i++) {
-    const payload = { ...data };
-    payload.startTime = timeNumberToString(startTime + i * duration);
-    payload.endTime = timeNumberToString(startTime + i * duration + duration);
-    slots.push(payload);
-  }
-
-  return slots;
-};
+import createTimeSlot from '../../utils/createTimeSlot';
 
 const createSlotDB = async (data: SlotType) => {
-  const serviceId = data.service;
-
-  const service: ServiceType = await carServices.getServicesDB(serviceId);
+  const service: ServiceType = await carServices.getServicesDB(data.service);
 
   if (!service) {
     throw new AppError(404, 'Service not found');
@@ -43,12 +14,40 @@ const createSlotDB = async (data: SlotType) => {
 
   // Creating time slot from start to end time
   const slotData = createTimeSlot(data, service.duration);
-  console.log(slotData);
+  if (slotData.length === 0) {
+    throw new AppError(
+      404,
+      'Error creating time slot please check start and end time',
+    );
+  }
+  const result = await SlotModel.create(slotData);
+  return result;
+};
 
-  // const result = await SlotModel.create(slotData);
-  // return result;
+const getAvailableSlotDB = async (searchQuery: QueryType) => {
+  const { date, serviceId } = searchQuery;
+  const query: QueryType = {};
+  if (date) {
+    query.date = date;
+  }
+  if (serviceId) {
+    query.service = serviceId;
+  }
+
+  const results = await SlotModel.find({
+    $and: [{ isBooked: 'available' }, query],
+  }).populate({
+    path: 'service',
+  });
+
+  if (results.length === 0) {
+    throw new AppError(404, 'Slot not found');
+  }
+
+  return results;
 };
 
 export const slotServices = {
   createSlotDB,
+  getAvailableSlotDB,
 };
