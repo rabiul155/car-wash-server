@@ -6,6 +6,7 @@ import notFoundRoute from './app/middleware/notFoundRoute';
 import globalErrorHandler from './app/error/globalErrorHandler';
 import { servicesRouter } from './app/modules/service/service.routes';
 import { slotsRouter } from './app/modules/slot/slot.routes';
+import { usersRouter } from './app/modules/user/user.routes';
 
 const app: Application = express();
 
@@ -22,6 +23,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/api/services', servicesRouter);
 app.use('/api/slots', slotsRouter);
+app.use('/api/users', usersRouter);
 
 //Not found route handle
 app.all('*', notFoundRoute);
