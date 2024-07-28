@@ -42,17 +42,14 @@ const userSchema = new mongoose.Schema<UserType, UserModelType, UserMethodType>(
 
 // Hash password before adding data to database
 userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, 12);
-    next();
-  } else {
-    next();
-  }
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
 });
 
 // Remove password before sending user data to client
 userSchema.post('save', function (doc) {
   doc.password = '';
+  doc.__v = undefined;
 });
 
 userSchema.methods.validatePassword = async function (
