@@ -4,9 +4,10 @@ import cors from 'cors';
 //route import
 import notFoundRoute from './app/middleware/notFoundRoute';
 import globalErrorHandler from './app/error/globalErrorHandler';
-import { servicesRouter } from './app/modules/service/service.routes';
-import { slotsRouter } from './app/modules/slot/slot.routes';
-import { usersRouter } from './app/modules/user/user.routes';
+import { serviceRoutes } from './app/modules/service/service.routes';
+import { bookingRoutes } from './app/modules/booking/booking.routes';
+import { userRoutes } from './app/modules/user/user.routes';
+import { slotRoutes } from './app/modules/slot/slot.routes';
 
 const app: Application = express();
 
@@ -21,9 +22,10 @@ app.get('/', (req: Request, res: Response) => {
 
 // Route
 
-app.use('/api/services', servicesRouter);
-app.use('/api/slots', slotsRouter);
-app.use('/api/auth', usersRouter);
+app.use('/api/services', serviceRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/slots', slotRoutes);
+app.use('/api/auth', userRoutes);
 
 //Not found route handle
 app.all('*', notFoundRoute);

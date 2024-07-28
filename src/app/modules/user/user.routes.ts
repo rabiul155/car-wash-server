@@ -15,4 +15,4 @@ router.post('/login', authControllers.logInUser);
 
 router.route('/').get(userControllers.getUsers);
 
-export const usersRouter = router;
+export const userRoutes = router;

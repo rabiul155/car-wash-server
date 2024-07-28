@@ -30,4 +30,4 @@ router
     serviceControllers.deleteServices,
   );
 
-export const servicesRouter = router;
+export const serviceRoutes = router;
