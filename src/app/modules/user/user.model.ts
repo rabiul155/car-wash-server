@@ -46,12 +46,6 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// Remove password before sending user data to client
-userSchema.post('save', function (doc) {
-  doc.password = '';
-  doc.__v = undefined;
-});
-
 userSchema.methods.validatePassword = async function (
   userPassword: string,
   hashPassword: string,
