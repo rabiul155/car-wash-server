@@ -23,7 +23,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/api/services', servicesRouter);
 app.use('/api/slots', slotsRouter);
-app.use('/api/users', usersRouter);
+app.use('/api/auth', usersRouter);
 
 //Not found route handle
 app.all('*', notFoundRoute);

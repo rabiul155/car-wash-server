@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import catchAsync from '../../utils/catchAsync';
-import { userServices } from './user.services';
+import userServices from './user.services';
 
 const createUser: RequestHandler = catchAsync(async (req, res, next) => {
   const data = await userServices.createUserDB(req.body);
@@ -22,7 +22,9 @@ const getUsers: RequestHandler = catchAsync(async (req, res, next) => {
   });
 });
 
-export const userControllers = {
+const userControllers = {
   createUser,
   getUsers,
 };
+
+export default userControllers;

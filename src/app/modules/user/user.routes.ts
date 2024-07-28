@@ -1,13 +1,18 @@
 import express from 'express';
-import validateRequest from '../../utils/validateRequest';
 import userValidationSchema from './user.validate';
-import { userControllers } from './user.controllers';
+import userControllers from './user.controllers';
+import authControllers from '../auth/auth.controllers';
+import validateRequest from '../../utils/validateRequest';
 
 const router = express.Router();
 
-router
-  .route('/')
-  .get(userControllers.getUsers)
-  .post(validateRequest(userValidationSchema), userControllers.createUser);
+router.post(
+  '/singup',
+  validateRequest(userValidationSchema),
+  authControllers.singUpUser,
+);
+router.post('/login', authControllers.logInUser);
+
+router.route('/').get(userControllers.getUsers);
 
 export const usersRouter = router;

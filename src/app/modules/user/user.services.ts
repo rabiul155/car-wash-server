@@ -5,12 +5,15 @@ const createUserDB = async (userData: UserType) => {
   const user = await User.create(userData);
   return user;
 };
+
 const getUserDB = async () => {
   const users = await User.find();
   return users;
 };
 
-export const userServices = {
+const userServices = {
   createUserDB,
   getUserDB,
 };
+
+export default userServices;
