@@ -16,6 +16,7 @@ const singUpUser: RequestHandler = catchAsync(async (req, res, next) => {
 const logInUser: RequestHandler = catchAsync(async (req, res, next) => {
   const data = await authServices.logInUserDB(req.body);
   const token = createToken(data.email);
+  req.user = data;
   res.status(200).json({
     success: true,
     statusCode: 200,
