@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import catchAsync from '../../utils/catchAsync';
 import { slotServices } from './slot.services';
+import notFoundResponse from '../../utils/notFoundResponse';
 
 const createSlot: RequestHandler = catchAsync(async (req, res, next) => {
   const data = await slotServices.createSlotDB(req.body);
@@ -15,6 +16,9 @@ const createSlot: RequestHandler = catchAsync(async (req, res, next) => {
 const getAvailableSlot: RequestHandler = catchAsync(async (req, res, next) => {
   const query = req.query;
   const data = await slotServices.getAvailableSlotDB(query);
+  if (!data || data.length === 0) {
+    return notFoundResponse(res);
+  }
   res.status(200).json({
     success: true,
     statusCode: 200,

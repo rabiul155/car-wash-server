@@ -1,12 +1,11 @@
 import AppError from '../../error/AppError';
-import { ServiceType } from '../service/service.interface';
 import { carServices } from '../service/service.services';
 import { QueryType, SlotType } from './slot.interface';
 import SlotModel from './slot.model';
 import createTimeSlot from '../../utils/createTimeSlot';
 
 const createSlotDB = async (data: SlotType) => {
-  const service: ServiceType = await carServices.getServicesDB(data.service);
+  const service = await carServices.getServicesDB(data.service);
 
   if (!service) {
     throw new AppError(404, 'Service not found');
@@ -39,10 +38,6 @@ const getAvailableSlotDB = async (searchQuery: QueryType) => {
   }).populate({
     path: 'service',
   });
-
-  if (results.length === 0) {
-    throw new AppError(404, 'Slot not found');
-  }
 
   return results;
 };

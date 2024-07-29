@@ -15,9 +15,6 @@ const getAllServicesDB = async () => {
 
 const getServicesDB = async (id: string | mongoose.Types.ObjectId) => {
   const result = await ServiceModel.findById(id);
-  if (!result) {
-    throw new AppError(404, 'Service not found');
-  }
   return result;
 };
 

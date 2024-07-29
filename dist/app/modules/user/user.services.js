@@ -12,22 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const path_1 = __importDefault(require("path"));
-dotenv_1.default.config({ path: path_1.default.join((process.cwd(), '.env')) });
-const app_1 = __importDefault(require("./app"));
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield mongoose_1.default.connect(process.env.DB_URL);
-            app_1.default.listen(process.env.PORT, () => {
-                console.log(`Car wash services app listening on port ${process.env.PORT}`);
-            });
-        }
-        catch (error) {
-            console.log('DB connection error', error);
-        }
-    });
-}
-main();
+const user_model_1 = __importDefault(require("./user.model"));
+const getUserDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield user_model_1.default.find();
+    return users;
+});
+const userServices = {
+    getUserDB,
+};
+exports.default = userServices;

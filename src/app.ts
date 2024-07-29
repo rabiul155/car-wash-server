@@ -5,7 +5,10 @@ import cors from 'cors';
 import notFoundRoute from './app/middleware/notFoundRoute';
 import globalErrorHandler from './app/error/globalErrorHandler';
 import { serviceRoutes } from './app/modules/service/service.routes';
-import { bookingRoutes } from './app/modules/booking/booking.routes';
+import {
+  bookingRoutes,
+  myBookingRouter,
+} from './app/modules/booking/booking.routes';
 import { userRoutes } from './app/modules/user/user.routes';
 import { slotRoutes } from './app/modules/slot/slot.routes';
 
@@ -26,6 +29,7 @@ app.use('/api/services', serviceRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/slots', slotRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/my-bookings', myBookingRouter);
 
 //Not found route handle
 app.all('*', notFoundRoute);

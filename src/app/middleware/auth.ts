@@ -51,7 +51,7 @@ export const authenticate: RequestHandler = catchAsync(
 export const authorization = (...roles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!roles.includes(req.user.role)) {
-      return next(new AppError(403, "You don't have this permission"));
+      return next(new AppError(403, 'You have no access to this route'));
     }
     next();
   };

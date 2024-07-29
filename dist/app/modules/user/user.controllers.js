@@ -12,22 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const path_1 = __importDefault(require("path"));
-dotenv_1.default.config({ path: path_1.default.join((process.cwd(), '.env')) });
-const app_1 = __importDefault(require("./app"));
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield mongoose_1.default.connect(process.env.DB_URL);
-            app_1.default.listen(process.env.PORT, () => {
-                console.log(`Car wash services app listening on port ${process.env.PORT}`);
-            });
-        }
-        catch (error) {
-            console.log('DB connection error', error);
-        }
+const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
+const user_services_1 = __importDefault(require("./user.services"));
+const notFoundResponse_1 = __importDefault(require("../../utils/notFoundResponse"));
+const getUsers = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield user_services_1.default.getUserDB();
+    if (!data || data.length === 0) {
+        return (0, notFoundResponse_1.default)(res);
+    }
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: 'User fetched successfully',
+        data,
     });
-}
-main();
+}));
+const userControllers = {
+    getUsers,
+};
+exports.default = userControllers;

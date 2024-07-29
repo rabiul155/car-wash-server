@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import catchAsync from '../../utils/catchAsync';
 import { carServices } from './service.services';
+import notFoundResponse from '../../utils/notFoundResponse';
 
 const createService: RequestHandler = catchAsync(async (req, res, next) => {
   const data = await carServices.createServicesDB(req.body);
@@ -14,6 +15,9 @@ const createService: RequestHandler = catchAsync(async (req, res, next) => {
 
 const getAllServices: RequestHandler = catchAsync(async (req, res, next) => {
   const data = await carServices.getAllServicesDB();
+  if (!data || data.length === 0) {
+    return notFoundResponse(res);
+  }
   res.status(200).json({
     success: true,
     statusCode: 200,
@@ -23,6 +27,9 @@ const getAllServices: RequestHandler = catchAsync(async (req, res, next) => {
 });
 const getServices: RequestHandler = catchAsync(async (req, res, next) => {
   const data = await carServices.getServicesDB(req.params.id);
+  if (!data) {
+    return notFoundResponse(res);
+  }
   res.status(200).json({
     success: true,
     statusCode: 200,

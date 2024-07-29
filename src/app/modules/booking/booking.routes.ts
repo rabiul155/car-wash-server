@@ -8,7 +8,7 @@ const router = express.Router();
 
 router
   .route('/')
-  .get()
+  .get(authenticate, authorization('admin'), bookingControllers.getAllBooking)
   .post(
     authenticate,
     authorization('user'),
@@ -17,3 +17,12 @@ router
   );
 
 export const bookingRoutes = router;
+
+export const myBookingRouter = express.Router();
+
+myBookingRouter.get(
+  '/',
+  authenticate,
+  authorization('user'),
+  bookingControllers.getMyBooking,
+);

@@ -5,19 +5,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+//route import
+const notFoundRoute_1 = __importDefault(require("./app/middleware/notFoundRoute"));
+const globalErrorHandler_1 = __importDefault(require("./app/error/globalErrorHandler"));
+const service_routes_1 = require("./app/modules/service/service.routes");
+const booking_routes_1 = require("./app/modules/booking/booking.routes");
+const user_routes_1 = require("./app/modules/user/user.routes");
+const slot_routes_1 = require("./app/modules/slot/slot.routes");
 const app = (0, express_1.default)();
 //middleware
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 //Testing route
-app.get("/", (req, res) => {
-    res.send("Hello from server");
+app.get('/', (req, res) => {
+    res.send('Hello from server');
 });
+// Route
+app.use('/api/services', service_routes_1.serviceRoutes);
+app.use('/api/bookings', booking_routes_1.bookingRoutes);
+app.use('/api/slots', slot_routes_1.slotRoutes);
+app.use('/api/auth', user_routes_1.userRoutes);
+app.use('/api/my-bookings', booking_routes_1.myBookingRouter);
 //Not found route handle
-app.all("*", (req, res) => {
-    res.status(400).json({
-        success: false,
-        message: "Route not found",
-    });
-});
+app.all('*', notFoundRoute_1.default);
+//Global error handling
+app.use(globalErrorHandler_1.default);
 exports.default = app;
