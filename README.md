@@ -37,3 +37,28 @@ JWT_EXPIRES_IN=10d
 
 Go back your terminal and write this command : npm run dev
 Then your api will be running successfully on port 5000
+
+## Project overview
+
+### Name : car-wash
+
+### Technology
+
+1. Express
+2. Mongoose
+3. Typescript
+4. JWT
+5. Zod
+6. Bycript
+
+### Feature
+
+Role base access admin/user
+
+### Admin role
+
+Admin can create services create slot also delete and update
+
+### User role
+
+User can book see services slot and can book a slot
