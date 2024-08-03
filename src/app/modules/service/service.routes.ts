@@ -18,7 +18,7 @@ router
 router
   .route('/:id')
   .get(serviceControllers.getServices)
-  .patch(
+  .put(
     authenticate,
     authorization('admin'),
     validateRequest(serviceValidationSchema.partial()),
