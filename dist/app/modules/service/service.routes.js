@@ -17,6 +17,6 @@ router
 router
     .route('/:id')
     .get(service_controllers_1.serviceControllers.getServices)
-    .patch(auth_1.authenticate, (0, auth_1.authorization)('admin'), (0, validateRequest_1.default)(service_validate_1.default.partial()), service_controllers_1.serviceControllers.updateServices)
+    .put(auth_1.authenticate, (0, auth_1.authorization)('admin'), (0, validateRequest_1.default)(service_validate_1.default.partial()), service_controllers_1.serviceControllers.updateServices)
     .delete(auth_1.authenticate, (0, auth_1.authorization)('admin'), service_controllers_1.serviceControllers.deleteServices);
 exports.serviceRoutes = router;
