@@ -30,6 +30,20 @@ const createSlotDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield slot_model_1.default.create(slotData);
     return result;
 });
+const getSlotsDB = (searchQuery) => __awaiter(void 0, void 0, void 0, function* () {
+    const { date, serviceId } = searchQuery;
+    const query = {};
+    if (date) {
+        query.date = date;
+    }
+    if (serviceId) {
+        query.service = serviceId;
+    }
+    const results = yield slot_model_1.default.find({ query }).populate({
+        path: 'service',
+    });
+    return results;
+});
 const getAvailableSlotDB = (searchQuery) => __awaiter(void 0, void 0, void 0, function* () {
     const { date, serviceId } = searchQuery;
     const query = {};
@@ -48,5 +62,6 @@ const getAvailableSlotDB = (searchQuery) => __awaiter(void 0, void 0, void 0, fu
 });
 exports.slotServices = {
     createSlotDB,
+    getSlotsDB,
     getAvailableSlotDB,
 };

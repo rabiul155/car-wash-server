@@ -25,6 +25,19 @@ const createSlot = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 
         data,
     });
 }));
+const getSlots = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const query = req.query;
+    const data = yield slot_services_1.slotServices.getSlotsDB(query);
+    if (!data || data.length === 0) {
+        return (0, notFoundResponse_1.default)(res);
+    }
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: 'Slots retrieved successfully',
+        data,
+    });
+}));
 const getAvailableSlot = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.query;
     const data = yield slot_services_1.slotServices.getAvailableSlotDB(query);
@@ -40,5 +53,6 @@ const getAvailableSlot = (0, catchAsync_1.default)((req, res, next) => __awaiter
 }));
 exports.slotController = {
     createSlot,
+    getSlots,
     getAvailableSlot,
 };
