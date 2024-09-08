@@ -7,7 +7,7 @@ import validateRequest from '../../utils/validateRequest';
 const router = express.Router();
 
 router.post(
-  '/singup',
+  '/signup',
   validateRequest(userValidationSchema),
   authControllers.singUpUser,
 );
