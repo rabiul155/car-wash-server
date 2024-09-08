@@ -13,6 +13,20 @@ const createSlot: RequestHandler = catchAsync(async (req, res, next) => {
   });
 });
 
+const getSlots: RequestHandler = catchAsync(async (req, res, next) => {
+  const query = req.query;
+  const data = await slotServices.getSlotsDB(query);
+  if (!data || data.length === 0) {
+    return notFoundResponse(res);
+  }
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: 'Slots retrieved successfully',
+    data,
+  });
+});
+
 const getAvailableSlot: RequestHandler = catchAsync(async (req, res, next) => {
   const query = req.query;
   const data = await slotServices.getAvailableSlotDB(query);
@@ -29,5 +43,6 @@ const getAvailableSlot: RequestHandler = catchAsync(async (req, res, next) => {
 
 export const slotController = {
   createSlot,
+  getSlots,
   getAvailableSlot,
 };

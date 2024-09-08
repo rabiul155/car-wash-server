@@ -23,6 +23,23 @@ const createSlotDB = async (data: SlotType) => {
   return result;
 };
 
+const getSlotsDB = async (searchQuery: QueryType) => {
+  const { date, serviceId } = searchQuery;
+  const query: QueryType = {};
+  if (date) {
+    query.date = date;
+  }
+  if (serviceId) {
+    query.service = serviceId;
+  }
+
+  const results = await SlotModel.find({ query }).populate({
+    path: 'service',
+  });
+
+  return results;
+};
+
 const getAvailableSlotDB = async (searchQuery: QueryType) => {
   const { date, serviceId } = searchQuery;
   const query: QueryType = {};
@@ -44,5 +61,6 @@ const getAvailableSlotDB = async (searchQuery: QueryType) => {
 
 export const slotServices = {
   createSlotDB,
+  getSlotsDB,
   getAvailableSlotDB,
 };
