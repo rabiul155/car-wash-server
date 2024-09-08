@@ -39,7 +39,7 @@ const getSlotsDB = (searchQuery) => __awaiter(void 0, void 0, void 0, function* 
     if (serviceId) {
         query.service = serviceId;
     }
-    const results = yield slot_model_1.default.find({ query }).populate({
+    const results = yield slot_model_1.default.find(query).populate({
         path: 'service',
     });
     return results;

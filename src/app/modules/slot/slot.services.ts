@@ -33,7 +33,7 @@ const getSlotsDB = async (searchQuery: QueryType) => {
     query.service = serviceId;
   }
 
-  const results = await SlotModel.find({ query }).populate({
+  const results = await SlotModel.find(query).populate({
     path: 'service',
   });
 

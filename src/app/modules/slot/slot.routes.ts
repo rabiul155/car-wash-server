@@ -6,6 +6,8 @@ import { authenticate, authorization } from '../../middleware/auth';
 
 const router = express.Router();
 
+router.get('/', slotController.getSlots);
+
 router.post(
   '/',
   authenticate,
@@ -13,8 +15,6 @@ router.post(
   validateRequest(slotValidationSchema),
   slotController.createSlot,
 );
-
-router.get('/', slotController.getSlots);
 
 router.get('/availability', slotController.getAvailableSlot);
 
