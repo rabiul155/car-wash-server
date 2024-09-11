@@ -16,9 +16,6 @@ const createSlot: RequestHandler = catchAsync(async (req, res, next) => {
 const getSlots: RequestHandler = catchAsync(async (req, res, next) => {
   const query = req.query;
   const data = await slotServices.getSlotsDB(query);
-  if (!data || data.length === 0) {
-    return notFoundResponse(res);
-  }
   res.status(200).json({
     success: true,
     statusCode: 200,
@@ -30,9 +27,6 @@ const getSlots: RequestHandler = catchAsync(async (req, res, next) => {
 const getAvailableSlot: RequestHandler = catchAsync(async (req, res, next) => {
   const query = req.query;
   const data = await slotServices.getAvailableSlotDB(query);
-  if (!data || data.length === 0) {
-    return notFoundResponse(res);
-  }
   res.status(200).json({
     success: true,
     statusCode: 200,

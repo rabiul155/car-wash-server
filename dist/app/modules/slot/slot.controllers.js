@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.slotController = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const slot_services_1 = require("./slot.services");
-const notFoundResponse_1 = __importDefault(require("../../utils/notFoundResponse"));
 const createSlot = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield slot_services_1.slotServices.createSlotDB(req.body);
     res.status(201).json({
@@ -28,9 +27,6 @@ const createSlot = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 
 const getSlots = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.query;
     const data = yield slot_services_1.slotServices.getSlotsDB(query);
-    if (!data || data.length === 0) {
-        return (0, notFoundResponse_1.default)(res);
-    }
     res.status(200).json({
         success: true,
         statusCode: 200,
@@ -41,9 +37,6 @@ const getSlots = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0,
 const getAvailableSlot = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.query;
     const data = yield slot_services_1.slotServices.getAvailableSlotDB(query);
-    if (!data || data.length === 0) {
-        return (0, notFoundResponse_1.default)(res);
-    }
     res.status(200).json({
         success: true,
         statusCode: 200,
