@@ -14,7 +14,10 @@ const createService: RequestHandler = catchAsync(async (req, res, next) => {
 });
 
 const getAllServices: RequestHandler = catchAsync(async (req, res, next) => {
-  const data = await carServices.getAllServicesDB();
+  console.log(req.query);
+  const data = await carServices.getAllServicesDB(
+    req.query as Record<string, string> | {},
+  );
   if (!data || data.length === 0) {
     return notFoundResponse(res);
   }

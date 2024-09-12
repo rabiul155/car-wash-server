@@ -15,12 +15,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.carServices = void 0;
 const AppError_1 = __importDefault(require("../../error/AppError"));
 const service_model_1 = require("./service.model");
+const queryBuilders_1 = require("../../utils/queryBuilders");
 const createServicesDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield service_model_1.ServiceModel.create(data);
     return result;
 });
-const getAllServicesDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const results = yield service_model_1.ServiceModel.find();
+const getAllServicesDB = (queryStr) => __awaiter(void 0, void 0, void 0, function* () {
+    const queryBuilders = new queryBuilders_1.QueryBuilders(service_model_1.ServiceModel.find(), queryStr)
+        .filter()
+        .search(['name', 'description'])
+        .short()
+        .select();
+    const results = yield queryBuilders.Query;
     return results;
 });
 const getServicesDB = (id) => __awaiter(void 0, void 0, void 0, function* () {

@@ -2,14 +2,21 @@ import mongoose from 'mongoose';
 import AppError from '../../error/AppError';
 import { ServiceType } from './service.interface';
 import { ServiceModel } from './service.model';
+import { QueryBuilders } from '../../utils/queryBuilders';
 
 const createServicesDB = async (data: ServiceType) => {
   const result = await ServiceModel.create(data);
   return result;
 };
 
-const getAllServicesDB = async () => {
-  const results = await ServiceModel.find();
+const getAllServicesDB = async (queryStr: Record<string, string>) => {
+  const queryBuilders = new QueryBuilders(ServiceModel.find(), queryStr)
+    .filter()
+    .search(['name', 'description'])
+    .short()
+    .select();
+
+  const results = await queryBuilders.Query;
   return results;
 };
 
