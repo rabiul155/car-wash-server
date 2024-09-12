@@ -44,6 +44,10 @@ const serviceSchema = new mongoose_1.default.Schema({
         type: String,
         required: [true, 'Service category is required.'],
     },
+    image: {
+        type: String,
+        required: [true, 'Service image is required'],
+    },
     description: {
         type: String,
         required: [true, 'Service description is required.'],

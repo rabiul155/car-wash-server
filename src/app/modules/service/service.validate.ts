@@ -2,6 +2,8 @@ import { z } from 'zod';
 
 const serviceValidationSchema = z.object({
   name: z.string({ required_error: 'Service name is required.' }),
+  category: z.string({ required_error: 'Service category is required.' }),
+  image: z.string({ required_error: 'Service image is required.' }),
   description: z.string({ required_error: 'Service description is required.' }),
   price: z
     .number({ required_error: 'Price is required' })

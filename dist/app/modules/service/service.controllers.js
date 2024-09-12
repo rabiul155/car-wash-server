@@ -26,7 +26,6 @@ const createService = (0, catchAsync_1.default)((req, res, next) => __awaiter(vo
     });
 }));
 const getAllServices = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.query);
     const data = yield service_services_1.carServices.getAllServicesDB(req.query);
     if (!data || data.length === 0) {
         return (0, notFoundResponse_1.default)(res);
