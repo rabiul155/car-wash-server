@@ -15,9 +15,7 @@ const createBooking: RequestHandler = catchAsync(async (req, res, next) => {
 
 const getAllBooking: RequestHandler = catchAsync(async (req, res, next) => {
   const data = await bookingServices.getAllBookingDB();
-  if (!data || data.length === 0) {
-    return notFoundResponse(res);
-  }
+
   res.status(200).json({
     success: true,
     statusCode: 200,
@@ -27,9 +25,7 @@ const getAllBooking: RequestHandler = catchAsync(async (req, res, next) => {
 });
 const getMyBooking: RequestHandler = catchAsync(async (req, res, next) => {
   const data = await bookingServices.getMyBookingDB(req.user._id);
-  if (!data || data.length === 0) {
-    return notFoundResponse(res);
-  }
+
   res.status(200).json({
     success: true,
     statusCode: 200,

@@ -17,9 +17,7 @@ const getAllServices: RequestHandler = catchAsync(async (req, res, next) => {
   const data = await carServices.getAllServicesDB(
     req.query as Record<string, string> | {},
   );
-  if (!data || data.length === 0) {
-    return notFoundResponse(res);
-  }
+
   res.status(200).json({
     success: true,
     statusCode: 200,
@@ -29,9 +27,7 @@ const getAllServices: RequestHandler = catchAsync(async (req, res, next) => {
 });
 const getServices: RequestHandler = catchAsync(async (req, res, next) => {
   const data = await carServices.getServicesDB(req.params.id);
-  if (!data) {
-    return notFoundResponse(res);
-  }
+
   res.status(200).json({
     success: true,
     statusCode: 200,

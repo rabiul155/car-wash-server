@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.serviceControllers = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const service_services_1 = require("./service.services");
-const notFoundResponse_1 = __importDefault(require("../../utils/notFoundResponse"));
 const createService = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield service_services_1.carServices.createServicesDB(req.body);
     res.status(201).json({
@@ -27,9 +26,6 @@ const createService = (0, catchAsync_1.default)((req, res, next) => __awaiter(vo
 }));
 const getAllServices = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield service_services_1.carServices.getAllServicesDB(req.query);
-    if (!data || data.length === 0) {
-        return (0, notFoundResponse_1.default)(res);
-    }
     res.status(200).json({
         success: true,
         statusCode: 200,
@@ -39,9 +35,6 @@ const getAllServices = (0, catchAsync_1.default)((req, res, next) => __awaiter(v
 }));
 const getServices = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield service_services_1.carServices.getServicesDB(req.params.id);
-    if (!data) {
-        return (0, notFoundResponse_1.default)(res);
-    }
     res.status(200).json({
         success: true,
         statusCode: 200,

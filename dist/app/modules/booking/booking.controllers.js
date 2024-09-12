@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.bookingControllers = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const booking_services_1 = require("./booking.services");
-const notFoundResponse_1 = __importDefault(require("../../utils/notFoundResponse"));
 const createBooking = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield booking_services_1.bookingServices.createBookingDB(req.user._id, req.body);
     res.status(201).json({
@@ -27,9 +26,6 @@ const createBooking = (0, catchAsync_1.default)((req, res, next) => __awaiter(vo
 }));
 const getAllBooking = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield booking_services_1.bookingServices.getAllBookingDB();
-    if (!data || data.length === 0) {
-        return (0, notFoundResponse_1.default)(res);
-    }
     res.status(200).json({
         success: true,
         statusCode: 200,
@@ -39,9 +35,6 @@ const getAllBooking = (0, catchAsync_1.default)((req, res, next) => __awaiter(vo
 }));
 const getMyBooking = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield booking_services_1.bookingServices.getMyBookingDB(req.user._id);
-    if (!data || data.length === 0) {
-        return (0, notFoundResponse_1.default)(res);
-    }
     res.status(200).json({
         success: true,
         statusCode: 200,
