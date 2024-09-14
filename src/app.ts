@@ -11,6 +11,7 @@ import {
 } from './app/modules/booking/booking.routes';
 import { userRoutes } from './app/modules/user/user.routes';
 import { slotRoutes } from './app/modules/slot/slot.routes';
+import { reviewRoutes } from './app/modules/reviews/reviews.routers';
 
 const app: Application = express();
 
@@ -28,7 +29,8 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/services', serviceRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/slots', slotRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/api/slots', slotRoutes);
+app.use('/api/reviews', reviewRoutes);
 app.use('/api/my-bookings', myBookingRouter);
 
 //Not found route handle
