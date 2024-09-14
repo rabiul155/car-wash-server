@@ -18,4 +18,5 @@ export type BookingType = {
   vehicleModel: string;
   manufacturingYear: number;
   registrationPlate: string;
+  isConfirmed?: false;
 };

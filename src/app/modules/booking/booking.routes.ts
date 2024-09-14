@@ -16,6 +16,8 @@ router
     bookingControllers.createBooking,
   );
 
+router.patch('/update', authenticate, bookingControllers.updateBooking);
+
 export const bookingRoutes = router;
 
 export const myBookingRouter = express.Router();

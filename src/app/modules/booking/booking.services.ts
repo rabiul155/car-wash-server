@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import SlotModel from '../slot/slot.model';
 import Booking from './booking.model';
 import AppError from '../../error/AppError';
+import { BookingType } from './booking.interface';
 
 const createBookingDB = async (userId: string, data: any) => {
   const payload = {
@@ -22,8 +23,6 @@ const createBookingDB = async (userId: string, data: any) => {
 
     const slot = await SlotModel.findById(data.slotId);
 
-    console.log(data.slotId);
-
     if (!slot) {
       throw new AppError(400, 'Error creating booking try again slot');
     }
@@ -31,10 +30,6 @@ const createBookingDB = async (userId: string, data: any) => {
     if (slot && slot?.isBooked === 'booked') {
       throw new AppError(400, 'Slot already booked try new slot');
     }
-
-    // Update the slot and save to DB
-    slot.isBooked = 'booked';
-    await slot.save();
 
     const booking = await Booking.create(payload);
 
@@ -51,7 +46,46 @@ const createBookingDB = async (userId: string, data: any) => {
       throw new AppError(400, 'Error creating booking try again result');
     }
 
+    await session.commitTransaction();
+    await session.endSession();
     return result;
+  } catch (err) {
+    await session.abortTransaction();
+    await session.endSession();
+    throw err;
+  }
+};
+
+const updateBooking = async (bookingId: string) => {
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    const booking: BookingType | null = await Booking.findByIdAndUpdate(
+      { _id: bookingId },
+      { isConfirmed: true },
+      { new: true },
+    );
+
+    if (!booking) {
+      throw new AppError(400, 'Error updating booking try again slot');
+    }
+
+    const result = await SlotModel.findByIdAndUpdate(
+      { _id: booking.slot },
+      { isBooked: 'booked' },
+      { new: true },
+    );
+
+    if (!result) {
+      throw new AppError(400, 'Error updating booking try again slot');
+    }
+
+    await session.commitTransaction();
+    await session.endSession();
+
+    return booking;
   } catch (err) {
     await session.abortTransaction();
     await session.endSession();
@@ -78,4 +112,5 @@ export const bookingServices = {
   createBookingDB,
   getAllBookingDB,
   getMyBookingDB,
+  updateBooking,
 };

@@ -32,16 +32,12 @@ const createBookingDB = (userId, data) => __awaiter(void 0, void 0, void 0, func
     try {
         session.startTransaction();
         const slot = yield slot_model_1.default.findById(data.slotId);
-        console.log(data.slotId);
         if (!slot) {
             throw new AppError_1.default(400, 'Error creating booking try again slot');
         }
         if (slot && (slot === null || slot === void 0 ? void 0 : slot.isBooked) === 'booked') {
             throw new AppError_1.default(400, 'Slot already booked try new slot');
         }
-        // Update the slot and save to DB
-        slot.isBooked = 'booked';
-        yield slot.save();
         const booking = yield booking_model_1.default.create(payload);
         if (!booking) {
             throw new AppError_1.default(400, 'Error creating booking try again booking');
@@ -53,7 +49,31 @@ const createBookingDB = (userId, data) => __awaiter(void 0, void 0, void 0, func
         if (!result) {
             throw new AppError_1.default(400, 'Error creating booking try again result');
         }
+        yield session.commitTransaction();
+        yield session.endSession();
         return result;
+    }
+    catch (err) {
+        yield session.abortTransaction();
+        yield session.endSession();
+        throw err;
+    }
+});
+const updateBooking = (bookingId) => __awaiter(void 0, void 0, void 0, function* () {
+    const session = yield mongoose_1.default.startSession();
+    try {
+        session.startTransaction();
+        const booking = yield booking_model_1.default.findByIdAndUpdate({ _id: bookingId }, { isConfirmed: true }, { new: true });
+        if (!booking) {
+            throw new AppError_1.default(400, 'Error updating booking try again slot');
+        }
+        const result = yield slot_model_1.default.findByIdAndUpdate({ _id: booking.slot }, { isBooked: 'booked' }, { new: true });
+        if (!result) {
+            throw new AppError_1.default(400, 'Error updating booking try again slot');
+        }
+        yield session.commitTransaction();
+        yield session.endSession();
+        return booking;
     }
     catch (err) {
         yield session.abortTransaction();
@@ -79,4 +99,5 @@ exports.bookingServices = {
     createBookingDB,
     getAllBookingDB,
     getMyBookingDB,
+    updateBooking,
 };

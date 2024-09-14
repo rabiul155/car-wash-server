@@ -33,8 +33,20 @@ const getMyBooking: RequestHandler = catchAsync(async (req, res, next) => {
     data,
   });
 });
+const updateBooking: RequestHandler = catchAsync(async (req, res, next) => {
+  const data = await bookingServices.updateBooking(req.query.id as string);
+
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: 'User bookings updated successfully',
+    data,
+  });
+});
+
 export const bookingControllers = {
   createBooking,
   getAllBooking,
   getMyBooking,
+  updateBooking,
 };

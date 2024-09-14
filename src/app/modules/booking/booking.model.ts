@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { BookingType } from './booking.interface';
+import { boolean } from 'zod';
 
 // Define the schema
 const BookingSchema = new mongoose.Schema<BookingType>(
@@ -52,6 +53,10 @@ const BookingSchema = new mongoose.Schema<BookingType>(
     registrationPlate: {
       type: String,
       required: [true, 'Registration plate is required'],
+    },
+    isConfirmed: {
+      type: Boolean,
+      default: false,
     },
   },
   {

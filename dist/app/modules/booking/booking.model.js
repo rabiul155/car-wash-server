@@ -55,6 +55,10 @@ const BookingSchema = new mongoose_1.default.Schema({
         type: String,
         required: [true, 'Registration plate is required'],
     },
+    isConfirmed: {
+        type: Boolean,
+        default: false,
+    },
 }, {
     timestamps: true,
 });

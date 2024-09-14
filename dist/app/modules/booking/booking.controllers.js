@@ -42,8 +42,18 @@ const getMyBooking = (0, catchAsync_1.default)((req, res, next) => __awaiter(voi
         data,
     });
 }));
+const updateBooking = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield booking_services_1.bookingServices.updateBooking(req.query.id);
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: 'User bookings updated successfully',
+        data,
+    });
+}));
 exports.bookingControllers = {
     createBooking,
     getAllBooking,
     getMyBooking,
+    updateBooking,
 };
