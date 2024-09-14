@@ -13,7 +13,9 @@ const createReview: RequestHandler = catchAsync(async (req, res, next) => {
   });
 });
 const getAllReview: RequestHandler = catchAsync(async (req, res, next) => {
-  const data = await reviewService.getAllReviews();
+  const data = await reviewService.getAllReviews(
+    req.query as Record<string, string>,
+  );
 
   res.status(200).json({
     success: true,

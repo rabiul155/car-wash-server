@@ -6,8 +6,10 @@ const createReview = async (data: ReviewType) => {
   return result;
 };
 
-const getAllReviews = async () => {
-  const results = await Reviews.find();
+const getAllReviews = async (query: Record<string, string>) => {
+  const limit = query.limit;
+
+  const results = await Reviews.find().limit(Number(limit)).sort('-createdAt');
   return results;
 };
 

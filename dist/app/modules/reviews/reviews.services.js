@@ -18,8 +18,9 @@ const createReview = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield reviews_model_1.default.create(data);
     return result;
 });
-const getAllReviews = () => __awaiter(void 0, void 0, void 0, function* () {
-    const results = yield reviews_model_1.default.find();
+const getAllReviews = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const limit = query.limit;
+    const results = yield reviews_model_1.default.find().limit(Number(limit)).sort('-createdAt');
     return results;
 });
 exports.reviewService = {
