@@ -27,7 +27,6 @@ app.use('/api/bookings', booking_routes_1.bookingRoutes);
 app.use('/api/slots', slot_routes_1.slotRoutes);
 app.use('/api/auth', user_routes_1.userRoutes);
 app.use('/api/reviews', reviews_routers_1.reviewRoutes);
-app.use('/api/my-bookings', booking_routes_1.myBookingRouter);
 //Not found route handle
 app.all('*', notFoundRoute_1.default);
 //Global error handling

@@ -14,17 +14,14 @@ router
     authorization('user'),
     validateRequest(bookingValidationSchema),
     bookingControllers.createBooking,
-  );
+  )
+  .patch(authenticate, bookingControllers.updateBooking);
 
-router.patch('/update', authenticate, bookingControllers.updateBooking);
-
-export const bookingRoutes = router;
-
-export const myBookingRouter = express.Router();
-
-myBookingRouter.get(
-  '/',
+router.get(
+  '/my-booking',
   authenticate,
   authorization('user'),
   bookingControllers.getMyBooking,
 );
+
+export const bookingRoutes = router;
