@@ -14,6 +14,7 @@ router
     .route('/')
     .get(auth_1.authenticate, (0, auth_1.authorization)('admin'), booking_controllers_1.bookingControllers.getAllBooking)
     .post(auth_1.authenticate, (0, auth_1.authorization)('user'), (0, validateRequest_1.default)(booking_validate_1.default), booking_controllers_1.bookingControllers.createBooking)
-    .patch(auth_1.authenticate, booking_controllers_1.bookingControllers.updateBooking);
+    .patch(auth_1.authenticate, booking_controllers_1.bookingControllers.updateBooking)
+    .delete(auth_1.authenticate, booking_controllers_1.bookingControllers.deleteBooking);
 router.get('/my-booking', auth_1.authenticate, (0, auth_1.authorization)('user'), booking_controllers_1.bookingControllers.getMyBooking);
 exports.bookingRoutes = router;

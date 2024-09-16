@@ -95,9 +95,14 @@ const getMyBookingDB = (customerId) => __awaiter(void 0, void 0, void 0, functio
         .populate({ path: 'slot' });
     return results;
 });
+const deleteBooking = (bookingId) => __awaiter(void 0, void 0, void 0, function* () {
+    const results = yield booking_model_1.default.findOneAndDelete({ _id: bookingId });
+    return null;
+});
 exports.bookingServices = {
     createBookingDB,
     getAllBookingDB,
     getMyBookingDB,
     updateBooking,
+    deleteBooking,
 };

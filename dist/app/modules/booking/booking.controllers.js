@@ -47,7 +47,16 @@ const updateBooking = (0, catchAsync_1.default)((req, res, next) => __awaiter(vo
     res.status(200).json({
         success: true,
         statusCode: 200,
-        message: 'User bookings updated successfully',
+        message: 'Bookings confirmed successfully',
+        data,
+    });
+}));
+const deleteBooking = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield booking_services_1.bookingServices.deleteBooking(req.query.id);
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: 'Bookings deleted successfully',
         data,
     });
 }));
@@ -56,4 +65,5 @@ exports.bookingControllers = {
     getAllBooking,
     getMyBooking,
     updateBooking,
+    deleteBooking,
 };

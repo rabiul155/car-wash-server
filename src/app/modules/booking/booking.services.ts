@@ -108,9 +108,15 @@ const getMyBookingDB = async (customerId: string) => {
   return results;
 };
 
+const deleteBooking = async (bookingId: string) => {
+  const results = await Booking.findOneAndDelete({ _id: bookingId });
+  return null;
+};
+
 export const bookingServices = {
   createBookingDB,
   getAllBookingDB,
   getMyBookingDB,
   updateBooking,
+  deleteBooking,
 };

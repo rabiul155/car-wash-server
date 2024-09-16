@@ -39,7 +39,18 @@ const updateBooking: RequestHandler = catchAsync(async (req, res, next) => {
   res.status(200).json({
     success: true,
     statusCode: 200,
-    message: 'User bookings updated successfully',
+    message: 'Bookings confirmed successfully',
+    data,
+  });
+});
+
+const deleteBooking: RequestHandler = catchAsync(async (req, res, next) => {
+  const data = await bookingServices.deleteBooking(req.query.id as string);
+
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: 'Bookings deleted successfully',
     data,
   });
 });
@@ -49,4 +60,5 @@ export const bookingControllers = {
   getAllBooking,
   getMyBooking,
   updateBooking,
+  deleteBooking,
 };

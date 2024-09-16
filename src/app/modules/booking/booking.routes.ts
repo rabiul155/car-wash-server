@@ -15,7 +15,8 @@ router
     validateRequest(bookingValidationSchema),
     bookingControllers.createBooking,
   )
-  .patch(authenticate, bookingControllers.updateBooking);
+  .patch(authenticate, bookingControllers.updateBooking)
+  .delete(authenticate, bookingControllers.deleteBooking);
 
 router.get(
   '/my-booking',
