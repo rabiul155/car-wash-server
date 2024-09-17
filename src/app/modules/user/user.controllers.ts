@@ -16,8 +16,19 @@ const getUsers: RequestHandler = catchAsync(async (req, res, next) => {
   });
 });
 
+const updateRole: RequestHandler = catchAsync(async (req, res, next) => {
+  const data = await userServices.updateRoleDB(req.body);
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: 'User role update successfully',
+    data,
+  });
+});
+
 const userControllers = {
   getUsers,
+  updateRole,
 };
 
 export default userControllers;

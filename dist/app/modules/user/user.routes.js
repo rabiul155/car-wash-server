@@ -13,4 +13,5 @@ const router = express_1.default.Router();
 router.post('/signup', (0, validateRequest_1.default)(user_validate_1.default), auth_controllers_1.default.singUpUser);
 router.post('/login', auth_controllers_1.default.logInUser);
 router.route('/').get(user_controllers_1.default.getUsers);
+router.route('/').patch(user_controllers_1.default.updateRole);
 exports.userRoutes = router;

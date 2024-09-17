@@ -14,5 +14,6 @@ router.post(
 router.post('/login', authControllers.logInUser);
 
 router.route('/').get(userControllers.getUsers);
+router.route('/').patch(userControllers.updateRole);
 
 export const userRoutes = router;
