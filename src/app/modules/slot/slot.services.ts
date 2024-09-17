@@ -22,6 +22,14 @@ const createSlotDB = async (data: SlotType) => {
   const result = await SlotModel.create(slotData);
   return result;
 };
+const updateSlotDB = async (data: { _id: string; isBooked: string }) => {
+  const result = await SlotModel.findByIdAndUpdate(
+    { _id: data._id },
+    { isBooked: data.isBooked },
+    { new: true },
+  );
+  return result;
+};
 
 const getSlotsDB = async (searchQuery: QueryType) => {
   const { date, serviceId } = searchQuery;
@@ -61,6 +69,7 @@ const getAvailableSlotDB = async (searchQuery: QueryType) => {
 
 export const slotServices = {
   createSlotDB,
+  updateSlotDB,
   getSlotsDB,
   getAvailableSlotDB,
 };

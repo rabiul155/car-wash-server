@@ -11,6 +11,7 @@ const slot_controllers_1 = require("./slot.controllers");
 const auth_1 = require("../../middleware/auth");
 const router = express_1.default.Router();
 router.get('/', slot_controllers_1.slotController.getSlots);
+router.patch('/', slot_controllers_1.slotController.updateSlot);
 router.post('/', auth_1.authenticate, (0, auth_1.authorization)('admin'), (0, validateRequest_1.default)(slot_validate_1.default), slot_controllers_1.slotController.createSlot);
 router.get('/availability', slot_controllers_1.slotController.getAvailableSlot);
 exports.slotRoutes = router;

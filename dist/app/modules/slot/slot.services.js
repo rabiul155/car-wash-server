@@ -30,6 +30,10 @@ const createSlotDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield slot_model_1.default.create(slotData);
     return result;
 });
+const updateSlotDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield slot_model_1.default.findByIdAndUpdate({ _id: data._id }, { isBooked: data.isBooked }, { new: true });
+    return result;
+});
 const getSlotsDB = (searchQuery) => __awaiter(void 0, void 0, void 0, function* () {
     const { date, serviceId } = searchQuery;
     const query = {};
@@ -62,6 +66,7 @@ const getAvailableSlotDB = (searchQuery) => __awaiter(void 0, void 0, void 0, fu
 });
 exports.slotServices = {
     createSlotDB,
+    updateSlotDB,
     getSlotsDB,
     getAvailableSlotDB,
 };
