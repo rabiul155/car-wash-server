@@ -33,7 +33,9 @@ const getSlotsDB = async (searchQuery: QueryType) => {
     query.service = serviceId;
   }
 
-  const results = await SlotModel.find(query);
+  const results = await SlotModel.find(query).populate({
+    path: 'service',
+  });
 
   return results;
 };
@@ -50,6 +52,8 @@ const getAvailableSlotDB = async (searchQuery: QueryType) => {
 
   const results = await SlotModel.find({
     $and: [{ isBooked: 'available' }, query],
+  }).populate({
+    path: 'service',
   });
 
   return results;
