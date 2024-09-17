@@ -39,9 +39,7 @@ const getSlotsDB = (searchQuery) => __awaiter(void 0, void 0, void 0, function* 
     if (serviceId) {
         query.service = serviceId;
     }
-    const results = yield slot_model_1.default.find(query).populate({
-        path: 'service',
-    });
+    const results = yield slot_model_1.default.find(query);
     return results;
 });
 const getAvailableSlotDB = (searchQuery) => __awaiter(void 0, void 0, void 0, function* () {
@@ -55,8 +53,6 @@ const getAvailableSlotDB = (searchQuery) => __awaiter(void 0, void 0, void 0, fu
     }
     const results = yield slot_model_1.default.find({
         $and: [{ isBooked: 'available' }, query],
-    }).populate({
-        path: 'service',
     });
     return results;
 });
