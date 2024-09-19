@@ -19,8 +19,17 @@ const createSlot = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 
     const data = yield slot_services_1.slotServices.createSlotDB(req.body);
     res.status(201).json({
         success: true,
-        statusCode: 200,
+        statusCode: 201,
         message: 'Slots created successfully',
+        data,
+    });
+}));
+const updateSlot = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield slot_services_1.slotServices.updateSlotDB(req.body);
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: 'Slots updated successfully',
         data,
     });
 }));
@@ -47,5 +56,6 @@ const getAvailableSlot = (0, catchAsync_1.default)((req, res, next) => __awaiter
 exports.slotController = {
     createSlot,
     getSlots,
+    updateSlot,
     getAvailableSlot,
 };

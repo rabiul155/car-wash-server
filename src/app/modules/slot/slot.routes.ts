@@ -7,6 +7,7 @@ import { authenticate, authorization } from '../../middleware/auth';
 const router = express.Router();
 
 router.get('/', slotController.getSlots);
+router.patch('/', slotController.updateSlot);
 
 router.post(
   '/',
