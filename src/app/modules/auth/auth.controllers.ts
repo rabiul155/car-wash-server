@@ -26,9 +26,33 @@ const logInUser: RequestHandler = catchAsync(async (req, res, next) => {
   });
 });
 
+const updateRole: RequestHandler = catchAsync(async (req, res, next) => {
+  const data = await authServices.updateRoleDB(req.body);
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: 'User role update successfully',
+    data,
+  });
+});
+const updateUser: RequestHandler = catchAsync(async (req, res, next) => {
+  const data = await authServices.updateUserDB({
+    _id: req.params.id,
+    user: req.body,
+  });
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: 'User update successfully',
+    data,
+  });
+});
+
 const authControllers = {
   singUpUser,
   logInUser,
+  updateRole,
+  updateUser,
 };
 
 export default authControllers;

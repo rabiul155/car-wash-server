@@ -17,12 +17,7 @@ const getUserDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield user_model_1.default.find();
     return users;
 });
-const updateRoleDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_model_1.default.findByIdAndUpdate({ _id: data._id }, { role: data.role }, { new: true });
-    return user;
-});
 const userServices = {
     getUserDB,
-    updateRoleDB,
 };
 exports.default = userServices;

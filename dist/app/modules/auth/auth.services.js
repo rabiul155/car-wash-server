@@ -39,8 +39,25 @@ const logInUserDB = (userData) => __awaiter(void 0, void 0, void 0, function* ()
     user.__v = undefined;
     return user;
 });
+const updateRoleDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.default.findByIdAndUpdate({ _id: data._id }, { role: data.role }, { new: true });
+    return user;
+});
+const updateUserDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const payload = {
+        name: data.user.name,
+        phone: data.user.phone,
+        address: data.user.address,
+    };
+    const result = yield user_model_1.default.findByIdAndUpdate({ _id: data._id }, payload, {
+        new: true,
+    });
+    return result;
+});
 const authServices = {
     signUpUserDB,
     logInUserDB,
+    updateRoleDB,
+    updateUserDB,
 };
 exports.default = authServices;

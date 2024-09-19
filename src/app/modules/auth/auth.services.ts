@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import AppError from '../../error/AppError';
 import { UserType } from '../user/user.interface';
 import User from '../user/user.model';
@@ -37,9 +38,32 @@ const logInUserDB = async (userData: { email: string; password: string }) => {
   return user;
 };
 
+const updateRoleDB = async (data: { _id: string; role: 'admin' | 'user' }) => {
+  const user = await User.findByIdAndUpdate(
+    { _id: data._id },
+    { role: data.role },
+    { new: true },
+  );
+  return user;
+};
+const updateUserDB = async (data: { _id: string; user: UserType }) => {
+  const payload = {
+    name: data.user.name,
+    phone: data.user.phone,
+    address: data.user.address,
+  };
+
+  const result = await User.findByIdAndUpdate({ _id: data._id }, payload, {
+    new: true,
+  });
+  return result;
+};
+
 const authServices = {
   signUpUserDB,
   logInUserDB,
+  updateRoleDB,
+  updateUserDB,
 };
 
 export default authServices;

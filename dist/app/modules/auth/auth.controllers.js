@@ -36,8 +36,31 @@ const logInUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0
         data,
     });
 }));
+const updateRole = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield auth_services_1.default.updateRoleDB(req.body);
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: 'User role update successfully',
+        data,
+    });
+}));
+const updateUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield auth_services_1.default.updateUserDB({
+        _id: req.params.id,
+        user: req.body,
+    });
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: 'User update successfully',
+        data,
+    });
+}));
 const authControllers = {
     singUpUser,
     logInUser,
+    updateRole,
+    updateUser,
 };
 exports.default = authControllers;
