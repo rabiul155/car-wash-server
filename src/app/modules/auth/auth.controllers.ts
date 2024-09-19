@@ -5,11 +5,13 @@ import createToken from '../../utils/createToken';
 
 const singUpUser: RequestHandler = catchAsync(async (req, res, next) => {
   const data = await authServices.signUpUserDB(req.body);
+  const token = createToken(data.email);
   res.status(201).json({
     success: true,
     statusCode: 201,
     message: 'User registered successfully',
     data,
+    token,
   });
 });
 
@@ -26,24 +28,27 @@ const logInUser: RequestHandler = catchAsync(async (req, res, next) => {
   });
 });
 
+const updateUser: RequestHandler = catchAsync(async (req, res, next) => {
+  const data = await authServices.updateUserDB({
+    _id: req.params.id,
+    user: req.body,
+  });
+  const token = createToken(data.email);
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: 'User update successfully',
+    data,
+    token,
+  });
+});
+
 const updateRole: RequestHandler = catchAsync(async (req, res, next) => {
   const data = await authServices.updateRoleDB(req.body);
   res.status(200).json({
     success: true,
     statusCode: 200,
     message: 'User role update successfully',
-    data,
-  });
-});
-const updateUser: RequestHandler = catchAsync(async (req, res, next) => {
-  const data = await authServices.updateUserDB({
-    _id: req.params.id,
-    user: req.body,
-  });
-  res.status(200).json({
-    success: true,
-    statusCode: 200,
-    message: 'User update successfully',
     data,
   });
 });

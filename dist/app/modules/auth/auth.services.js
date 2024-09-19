@@ -49,10 +49,16 @@ const updateUserDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
         phone: data.user.phone,
         address: data.user.address,
     };
-    const result = yield user_model_1.default.findByIdAndUpdate({ _id: data._id }, payload, {
+    const user = yield user_model_1.default.findByIdAndUpdate({ _id: data._id }, payload, {
         new: true,
     });
-    return result;
+    if (!user) {
+        throw new AppError_1.default(401, 'Invalid email or password');
+    }
+    // Remove password and __v before sending user data to client
+    user.password = '';
+    user.__v = undefined;
+    return user;
 });
 const authServices = {
     signUpUserDB,

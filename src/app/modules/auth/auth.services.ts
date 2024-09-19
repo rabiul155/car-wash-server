@@ -30,7 +30,6 @@ const logInUserDB = async (userData: { email: string; password: string }) => {
   if (!isValid) {
     throw new AppError(401, 'Invalid email or password');
   }
-
   // Remove password and __v before sending user data to client
   user.password = '';
   user.__v = undefined;
@@ -52,11 +51,19 @@ const updateUserDB = async (data: { _id: string; user: UserType }) => {
     phone: data.user.phone,
     address: data.user.address,
   };
-
-  const result = await User.findByIdAndUpdate({ _id: data._id }, payload, {
+  const user = await User.findByIdAndUpdate({ _id: data._id }, payload, {
     new: true,
   });
-  return result;
+
+  if (!user) {
+    throw new AppError(401, 'Invalid email or password');
+  }
+
+  // Remove password and __v before sending user data to client
+  user.password = '';
+  user.__v = undefined;
+
+  return user;
 };
 
 const authServices = {
